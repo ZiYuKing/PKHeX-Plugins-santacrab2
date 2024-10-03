@@ -20,9 +20,15 @@ namespace AutoModPlugins
         internal static void TranslateInterface(this Control form, string lang) =>
             TranslateForm(form, GetContext(lang));
 
-        private static string GetTranslationFileNameInternal(ReadOnlySpan<char> lang) => $"almlang_{lang}";
+        private static string GetTranslationFileNameInternal(ReadOnlySpan<char> lang)
+        {
+            return lang.SequenceEqual("zh-Hans") || lang.SequenceEqual("zh-Hant") ? "almlang_zh" : $"almlang_{lang}";
+        }
 
-        private static string GetTranslationFileNameExternal(ReadOnlySpan<char> lang) => $"almlang_{lang}.txt";
+        private static string GetTranslationFileNameExternal(ReadOnlySpan<char> lang) 
+        {
+            return lang.SequenceEqual("zh-Hans") || lang.SequenceEqual("zh-Hant") ? "almlang_zh.txt" : $"almlang_{lang}.txt";
+        }
 
         public static string CurrentLanguage
         {
